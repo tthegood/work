@@ -2,20 +2,37 @@
 
   <head>
     <title>Homepage</title>
+    <link rel='stylesheet' href='styles.css'>
+    <style>
+      li {
+        font-family: cursive;
+        color: red;
+      }
+      .myimg {
+        width: 350px;
+        padding: 20px;
+      }
+      #wolverine {
+        padding: 5px;
+        font-size: 2em;
+        color: gold;
+      }
+    </style>
   </head>
 
   <body>
-    <h1>Home</h1>
+    <h1 style='color:red';>Home</h1>
+    <a href='about.html'>About</a>
     <p>This is my <a href="http://www.cnn.com">home</a> page</p>
     <h3>Favorite Marvel Characters</h3>
     <ol>
-      <li>Thor</li>
-      <li>Wolverine</li>
+      <li style='color:blue; font-family: cursive;'>Thor</li>
+      <li id='wolverine'>Wolverine</li>
       <li>Doctor Strange</li>
       <li>?</li>
       <li>?</li>
     </ol>
-    <img src='Thor.jpg'>
+    <img src='Thor.jpg' class='myimg'>
   </body>
 
   <script>

@@ -1,0 +1,31 @@
+<html>
+
+  <head>
+  </head>
+
+  <body>
+    <input id="heroname">
+    <button onclick='addHero()'>Add</button>
+    <div id='herolist'></div>
+  </body>
+
+  <script>
+    // global variable
+    var myheros = [];
+
+    function addHero() {
+      var iHandle = document.getElementById('heroname');
+      var dHandle = document.getElementById('herolist');
+      var myHTML = '<ul>';
+      myheros.push(iHandle.value);
+      for (i = 0; i < myheros.length; i++){
+        myHTML = myHTML + '<li>' + myheros[i] + '</li>';
+      }
+      var myHTML = myHTML + '</ul>';
+      console.log(myHTML);
+      dHandle.innerHTML = myHTML;
+    }
+
+  </script>
+
+</html>

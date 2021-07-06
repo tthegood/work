@@ -2,6 +2,7 @@
 
   <head>
     <script src='covid.json'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js'></script>
   </head>
 
 
@@ -13,16 +14,25 @@
 
 
   <script>
+    axios.get('https://www.trackcorona.live/api/countries')
+      .then(response => {
+      console.log(response)
+      buildList(response.data.data);
+    })
 
-    function buildList() {
+    function buildList(response) {
       var dHandle = document.getElementById('output');
       var myHTML = '<ul>';
 
-      coviddata.data.sort(function (a, b) {
-        return a.dead - b.dead;
+      //coviddata.data.sort(function (a, b) {
+      response.sort(function (a, b){
+        return b.dead - a.dead;
       });
-      for (i=0; i<coviddata.data.length; i++) {
-        myHTML = myHTML + '<li>' + coviddata.data[i].location + ' - ' + coviddata.data[i].dead
+      //for (i=0; i<coviddata.data.length; i++) {
+        //myHTML = myHTML + '<li>' + coviddata.data[i].location + ' - ' + coviddata.data[i].dead
+      for (i=0; i<response.length; i++) {
+        myHTML = myHTML + '<li>' + response[i].location + ' - ' + response[i].dead
+
       }
 
       myHTML = myHTML + '</ul>';

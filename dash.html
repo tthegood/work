@@ -5,6 +5,10 @@
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js'></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
   </head>
 
   <body>
@@ -23,9 +27,8 @@
         <div class="col s12 m6">
           <div class="card">
             <div class="card-content black-text">
-              <span class="card-title">Card Title</span>
-              <p>I am a very simple card. I am good at containing small bits of information.
-              I am convenient because I require little markup to use effectively.</p>
+              <span class="card-title">Top 10 COVID deaths</span>
+              <div id='output'></div>
             </div>
           </div>
         </div> <!-- end of col -->
@@ -33,9 +36,8 @@
         <div class="col s12 m6">
           <div class="card">
             <div class="card-content black-text">
-              <span class="card-title">Card Title</span>
-              <p>I am a very simple card. I am good at containing small bits of information.
-              I am convenient because I require little markup to use effectively.</p>
+              <span class="card-title">Map</span>
+              <div id='map' style='width:100%; height:63%;'></div>
             </div>
           </div>
         </div> <!-- end of col -->
@@ -52,7 +54,7 @@
           </div>
         </div>
       </div> <!-- end of col -->
-      
+
       <div class="col s12 m6">
         <div class="card">
           <div class="card-content black-text">
@@ -69,5 +71,39 @@
   </body>
 
   <script>
+
+    axios.get('https://www.trackcorona.live/api/countries')
+      .then(response => {
+        buildList(response.data.data);
+      })
+
+    mapIt();
+
+    function mapIt() {
+      var map = L.map('map').setView([51.505, -0.09], 13);
+
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      }).addTo(map);
+
+      L.marker([51.5, -0.09]).addTo(map)
+          .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
+          .openPopup();
+    }
+
+    function buildList(data) {
+      var dHandle = document.getElementById('output');
+      var myHTML = "<ul class='collection'>";
+
+      data.sort(function (a, b) {
+        return b.dead - a.dead;
+      });
+      for (i=0; i<10; i++) {
+        myHTML = myHTML + '<li>' + data[i].location + "<span class='badge'>" + data[i].dead
+      }
+
+      myHTML = myHTML + '</ul>';
+      dHandle.innerHTML = myHTML;
+    }
   </script>
 </html>
